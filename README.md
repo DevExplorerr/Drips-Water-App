@@ -1,16 +1,42 @@
-# drips_water
+# 💧 Drips Water App
 
-A new Flutter project.
+A simple yet smart **Water Delivery App** made with Flutter — now featuring a built-in **AI chatbot** powered by Dialogflow!
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🧠 Key Feature
 
-A few resources to get you started if this is your first Flutter project:
+- 🤖 **AI Chatbot (Dialogflow)** — Handles customer queries in real-time  
+- 🎨 Clean and modern UI  
+- 🔄 Reorder from history (UI only)  
+- 🚀 Smooth navigation  
+- 📱 Fully responsive layout  
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+> ⚠️ Note: This is a UI-only app. No backend or real-time database is connected.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🔧 Setup Instructions
+
+
+1. **Clone the repo**
+
+git clone https://github.com/DevExplorerr/Drips-Water-App.git
+cd Drips-Water-App
+
+Install packages
+
+flutter pub get
+Add your Dialogflow credentials
+
+Put your dialog_flow_auth.json file in the assets/ folder.
+⚠️ This file is private and not included in the repository.
+
+Then update pubspec.yaml if needed:
+
+flutter:
+  assets:
+    - assets/dialog_flow_auth.json
+    
+Run the app:
+flutter run
