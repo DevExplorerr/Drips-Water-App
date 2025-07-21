@@ -1,0 +1,42 @@
+name: drips_water
+description: "A new Flutter project."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.6.1
+
+dependencies:
+  cupertino_icons: ^1.0.8
+  dialog_flowtter: ^0.3.3
+  flutter:
+    sdk: flutter
+  google_fonts: ^4.0.4
+  intl: ^0.20.2
+  table_calendar: ^3.2.0
+
+dev_dependencies:
+  flutter_launcher_icons: ^0.14.4
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/drips_water_logo.jpg"
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/dialog_flow_auth.json
+    - assets/images/onboarding_images/
+    - assets/images/splash_screen/
+    - assets/images/welcome_screen/
+    - assets/images/home_screen/
+    - assets/images/cart_screen/
+    - assets/images/product_page/
+    - assets/images/order_success/
