@@ -44,3 +44,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 "assets/dialog_flow_auth.json" 
+assets/dialog_flow_auth.json*
+
