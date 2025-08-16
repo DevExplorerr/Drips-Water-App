@@ -84,153 +84,162 @@ class _ChatScreenState extends State<ChatScreen> {
         statusBarBrightness: Brightness.light,
       ),
     );
-    return Scaffold(
-      backgroundColor: const Color(0xffE3F2FD),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  child: const Row(
-                    children: [
-                      Icon(Icons.android, color: Colors.blue),
-                      SizedBox(width: 10),
-                      Text(
-                        "Drips Chatbot",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Spacer(),
-                      Icon(Icons.circle, size: 12, color: Colors.lightGreen),
-                      SizedBox(width: 4),
-                      Text("Online"),
-                    ],
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xffE3F2FD),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.android, color: Colors.blue),
+                        SizedBox(width: 10),
+                        Text(
+                          "Drips Chatbot",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Spacer(),
+                        Icon(Icons.circle, size: 12, color: Colors.lightGreen),
+                        SizedBox(width: 4),
+                        Text("Online"),
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 10),
-                    itemCount: messages.length + (isTyping ? 1 : 0),
-                    itemBuilder: (context, index) {
-                      if (isTyping && index == messages.length) {
-                        return Row(
-                          children: [
-                            const CircleAvatar(
-                              radius: 14,
-                              child: Icon(Icons.android, size: 16),
-                            ),
-                            const SizedBox(width: 8),
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: botColor,
-                                borderRadius: BorderRadius.circular(16),
+                  Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 10),
+                      itemCount: messages.length + (isTyping ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (isTyping && index == messages.length) {
+                          return Row(
+                            children: [
+                              const CircleAvatar(
+                                radius: 14,
+                                child: Icon(Icons.android, size: 16),
                               ),
-                              child: const BouncingDots(),
+                              const SizedBox(width: 8),
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  color: botColor,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: const BouncingDots(),
+                              ),
+                            ],
+                          );
+                        }
+
+                        final msg = messages[index];
+                        final isUser = msg['isUserMessage'];
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: isUser
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start,
+                          children: [
+                            if (!isUser)
+                              const Padding(
+                                padding: EdgeInsets.only(right: 8.0),
+                                child: CircleAvatar(
+                                  radius: 14,
+                                  backgroundColor: Colors.white,
+                                  child:
+                                      Icon(Icons.android, color: Colors.blue),
+                                ),
+                              ),
+                            Flexible(
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 14),
+                                decoration: BoxDecoration(
+                                  color: isUser ? userColor : botColor,
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: const Radius.circular(16),
+                                    topRight: const Radius.circular(16),
+                                    bottomLeft:
+                                        Radius.circular(isUser ? 16 : 0),
+                                    bottomRight:
+                                        Radius.circular(isUser ? 0 : 16),
+                                  ),
+                                ),
+                                child: Text(
+                                  msg['text'] ?? '',
+                                  style: TextStyle(
+                                    color:
+                                        isUser ? Colors.white : Colors.black87,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         );
-                      }
-
-                      final msg = messages[index];
-                      final isUser = msg['isUserMessage'];
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: isUser
-                            ? MainAxisAlignment.end
-                            : MainAxisAlignment.start,
-                        children: [
-                          if (!isUser)
-                            const Padding(
-                              padding: EdgeInsets.only(right: 8.0),
-                              child: CircleAvatar(
-                                radius: 14,
-                                backgroundColor: Colors.white,
-                                child: Icon(Icons.android, color: Colors.blue),
-                              ),
-                            ),
-                          Flexible(
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 6),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 14),
-                              decoration: BoxDecoration(
-                                color: isUser ? userColor : botColor,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: const Radius.circular(16),
-                                  topRight: const Radius.circular(16),
-                                  bottomLeft: Radius.circular(isUser ? 16 : 0),
-                                  bottomRight: Radius.circular(isUser ? 0 : 16),
-                                ),
-                              ),
-                              child: Text(
-                                msg['text'] ?? '',
-                                style: TextStyle(
-                                  color: isUser ? Colors.white : Colors.black87,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                      },
+                    ),
                   ),
-                ),
-                const SizedBox(height: 80),
-              ],
-            ),
-            Positioned(
-              bottom: 20,
-              left: 12,
-              right: 12,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 6,
-                            offset: Offset(0, 2),
-                          )
-                        ],
-                      ),
-                      child: TextField(
-                        cursorColor: userColor,
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          hintText: "Write your message...",
-                          hintStyle: GoogleFonts.poppins(color: blackColor),
-                          border: InputBorder.none,
+                  const SizedBox(height: 80),
+                ],
+              ),
+              Positioned(
+                bottom: 20,
+                left: 12,
+                right: 12,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                        ),
+                        child: TextField(
+                          cursorColor: userColor,
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            hintText: "Write your message...",
+                            hintStyle: GoogleFonts.poppins(color: blackColor),
+                            border: InputBorder.none,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: userColor,
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.send, color: Colors.white),
-                      onPressed: () => sendMessage(_controller.text),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+                    const SizedBox(width: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: userColor,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.send, color: Colors.white),
+                        onPressed: () => sendMessage(_controller.text),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
